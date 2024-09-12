@@ -8,8 +8,9 @@ import java.time.LocalDateTime;
      private final ExRateProvider exRateProvider;
 
      //Alt + Insert 생성자
-     public PaymentService() {
-         this.exRateProvider = new WebApiExRateProvider();
+     public PaymentService(ExRateProvider exRateProvider
+     ) {
+         this.exRateProvider =  exRateProvider;
      }
 
      public Payment prepare(Long orderId,

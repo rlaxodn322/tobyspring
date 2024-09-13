@@ -9,6 +9,7 @@ public class Client {
         PaymentService paymentService = objectFactory.paymentService();
 
         Payment payment = paymentService.prepare(100L, "USD", BigDecimal.valueOf(51.2));
+
         System.out.println(payment);
     }
 }

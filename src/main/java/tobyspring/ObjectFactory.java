@@ -3,12 +3,18 @@ package tobyspring;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import tobyspring.hellospring.CachedExRateProvider;
+
 @Configuration
 //@ComponentScan
 public class ObjectFactory {
     @Bean
     public PaymentService paymentService(){
-        return new PaymentService(exRateProvider());
+        return new PaymentService(cachedExRateProvider());
+    }
+    @Bean
+    public ExRateProvider cachedExRateProvider(){
+        return new CachedExRateProvider(exRateProvider());
     }
 //    @Bean
 //    public OrderService orderService(){
@@ -16,7 +22,7 @@ public class ObjectFactory {
 //    }
     @Bean
     public ExRateProvider exRateProvider() {
-        return new SimpleExRateProvider();
+        return new WebApiExRateProvider();
     }
 }
 //class OrderService{

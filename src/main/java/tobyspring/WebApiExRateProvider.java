@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.stream.Collectors;
-//@Component
+
 public class WebApiExRateProvider implements ExRateProvider{
     @Override
     public BigDecimal getExRate(String currency) throws IOException {

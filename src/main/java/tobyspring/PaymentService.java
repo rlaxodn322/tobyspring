@@ -5,9 +5,9 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-@Component
+//@Component
  public class PaymentService {
-     private final ExRateProvider exRateProvider;
+     ExRateProvider exRateProvider;
 
      //Alt + Insert 생성자
      public PaymentService(ExRateProvider exRateProvider

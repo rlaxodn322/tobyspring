@@ -2,21 +2,30 @@ package tobyspring;
 
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.core.annotation.Order;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.concurrent.TimeUnit;
 
 public class Client {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, InterruptedException {
         BeanFactory beanFactory = new AnnotationConfigApplicationContext(ObjectFactory.class);
         PaymentService paymentService = beanFactory.getBean(PaymentService.class);
-        PaymentService paymentService1 = beanFactory.getBean(PaymentService.class);
-        System.out.println(paymentService1);
-        System.out.println(paymentService);
-        System.out.println(paymentService1==paymentService);
-        Payment payment = paymentService.prepare(100L, "USD", BigDecimal.valueOf(51.2));
+//        OrderService orderService = beanFactory.getBean(OrderService.class);
+//        System.out.println(paymentService.exRateProvider == orderService.exRateProvider);
 
-        System.out.println(payment);
+
+        Payment payment1 = paymentService.prepare(100L, "USD", BigDecimal.valueOf(51.2));
+        System.out.println("Payment1 : " + payment1);
+        TimeUnit.SECONDS.sleep(1);
+        System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
+        Payment payment2 = paymentService.prepare(100L, "USD", BigDecimal.valueOf(51.2));
+        System.out.println("Payment2 : " + payment2 );
+        System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
+        TimeUnit.SECONDS.sleep(3);
+        Payment payment3 = paymentService.prepare(100L, "USD", BigDecimal.valueOf(51.2));
+        System.out.println("Payment3 : " + payment3);
     }
 }
 

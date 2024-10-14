@@ -1,6 +1,4 @@
-package tobyspring;
-
-import org.springframework.stereotype.Component;
+package tobyspring.exrate;
 
 import java.io.IOException;
 import java.math.BigDecimal;

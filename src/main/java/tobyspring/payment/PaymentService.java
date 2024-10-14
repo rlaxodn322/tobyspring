@@ -1,6 +1,6 @@
-package tobyspring;
+package tobyspring.payment;
 //Crtl+ ALT + O import 정리
-import org.springframework.stereotype.Component;
+import tobyspring.exrate.ExRateProvider;
 
 import java.io.IOException;
 import java.math.BigDecimal;

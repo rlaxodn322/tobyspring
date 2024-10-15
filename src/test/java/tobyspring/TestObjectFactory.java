@@ -2,15 +2,16 @@ package tobyspring;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import tobyspring.exrate.CachedExRateProvider;
 import tobyspring.exrate.ExRateProvider;
-import tobyspring.exrate.SimpleExRateProvider;
 import tobyspring.exrate.WebApiExRateProvider;
+import tobyspring.payment.ExRateProviderStub;
 import tobyspring.payment.PaymentService;
+
+import java.math.BigDecimal;
 
 @Configuration
 //@ComponentScan
-public class ObjectFactory {
+public class TestObjectFactory {
     @Bean
     public PaymentService paymentService(){
         return new PaymentService(exRateProvider());
@@ -18,7 +19,7 @@ public class ObjectFactory {
 
     @Bean
     public ExRateProvider exRateProvider() {
-        return new WebApiExRateProvider();
+        return new ExRateProviderStub(BigDecimal.valueOf(1_000));
     }
 }
 //    @Bean

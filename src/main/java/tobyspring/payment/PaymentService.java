@@ -4,15 +4,17 @@ import tobyspring.exrate.ExRateProvider;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.time.Clock;
 import java.time.LocalDateTime;
 //@Component
  public class PaymentService {
-     ExRateProvider exRateProvider;
-
+     private final ExRateProvider exRateProvider;
+     private final Clock clock;
      //Alt + Insert 생성자
      public PaymentService(ExRateProvider exRateProvider
-     ) {
+     , Clock clock) {
          this.exRateProvider =  exRateProvider;
+         this.clock = clock;
      }
 
      public Payment prepare(Long orderId,
@@ -23,7 +25,7 @@ import java.time.LocalDateTime;
         // 금액 계산
         BigDecimal convertedAmount = foreignCurrencyAmount.multiply(exRate);
         // 유효 시간 계산
-        LocalDateTime validUntil = LocalDateTime.now().plusMinutes(30);
+        LocalDateTime validUntil = LocalDateTime.now(clock).plusMinutes(30);
 
         return new Payment(orderId, currency, foreignCurrencyAmount, exRate, convertedAmount, validUntil);
 

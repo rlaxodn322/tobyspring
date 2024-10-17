@@ -14,7 +14,6 @@ public class ClockTest {
     void clock(){
         Clock clock = Clock.systemDefaultZone();
         LocalDateTime dt1 = LocalDateTime.now(clock);
-
         LocalDateTime dt2 = LocalDateTime.now(clock);
         Assertions.assertThat(dt2).isAfter(dt1);
 

@@ -8,6 +8,8 @@ import tobyspring.payment.PaymentService;
 
 import java.math.BigDecimal;
 import java.time.Clock;
+import java.time.Instant;
+import java.time.ZoneId;
 
 @Configuration
 //@ComponentScan
@@ -23,7 +25,7 @@ public class TestPaymentConfig {
     }
     @Bean
     public Clock clock(){
-        return Clock.systemDefaultZone();
+        return Clock.fixed(Instant.now() , ZoneId.systemDefault());
     }
 }
 //    @Bean

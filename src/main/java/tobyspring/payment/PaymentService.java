@@ -22,12 +22,8 @@ import java.time.LocalDateTime;
                             BigDecimal foreignCurrencyAmount) throws IOException {
 
         BigDecimal exRate = exRateProvider.getExRate(currency);
-        // 금액 계산
-        BigDecimal convertedAmount = foreignCurrencyAmount.multiply(exRate);
-        // 유효 시간 계산
-        LocalDateTime validUntil = LocalDateTime.now(clock).plusMinutes(30);
 
-        return new Payment(orderId, currency, foreignCurrencyAmount, exRate, convertedAmount, validUntil);
+        return Payment.createPrepared(orderId, currency, foreignCurrencyAmount, exRate, LocalDateTime.now(clock));
 
     }
 

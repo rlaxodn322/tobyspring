@@ -1,5 +1,6 @@
 package tobyspring.payment;
 
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -7,6 +8,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.Clock;
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 
 import static java.math.BigDecimal.*;
@@ -32,6 +34,10 @@ class PaymentServiceTest {
     void validUntil() throws IOException {
         PaymentService paymentService = new PaymentService(new ExRateProviderStub(valueOf(1_000)),clock);
         Payment payment = paymentService.prepare(1L,"KRW", BigDecimal.TEN);
+        LocalDateTime now = LocalDateTime.now(this.clock);
+        LocalDateTime expectedValidUntil = now.plusMinutes(30);
+
+         Assertions.assertThat(payment.getValidUntil()).isEqualTo(expectedValidUntil);
     }
     private static void testAmount(BigDecimal exRate, BigDecimal convertedAmount, Clock clock) throws IOException {
         PaymentService paymentService = new PaymentService(new ExRateProviderStub(exRate), clock);

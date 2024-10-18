@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 import java.util.concurrent.TimeUnit;
 
 public class Client {
-    public static void main(String[] args) throws IOException, InterruptedException {
+    public static void main(String[] args)  {
         BeanFactory beanFactory = new AnnotationConfigApplicationContext(PaymentConfig .class);
         PaymentService paymentService = beanFactory.getBean(PaymentService.class);
 //        OrderService orderService = beanFactory.getBean(OrderService.class);

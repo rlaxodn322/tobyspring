@@ -26,7 +26,7 @@ class PaymentServiceSpringTest {
 
     @Test
     //@DisplayName("잘 충족")
-    void convertedAmount() throws IOException {
+    void convertedAmount()  {
         //PaymentService paymentService = beanFactory.getBean(PaymentService.class);
         //exRate: 1000
         Payment payment = paymentService.prepare(1L, "KRW", BigDecimal.TEN);
@@ -41,7 +41,7 @@ class PaymentServiceSpringTest {
 //        assertThat(payment.getValidUntil()).isBefore(LocalDateTime.now().plusMinutes(30));
     }
     @Test
-    void validUntil() throws IOException {
+    void validUntil()  {
 
         Payment payment = paymentService.prepare(1L,"KRW", BigDecimal.TEN);
         LocalDateTime now = LocalDateTime.now(this.clock);

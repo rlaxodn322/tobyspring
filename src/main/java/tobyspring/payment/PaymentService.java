@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 
      public Payment prepare(Long orderId,
                             String currency,
-                            BigDecimal foreignCurrencyAmount) throws IOException {
+                            BigDecimal foreignCurrencyAmount)  {
 
         BigDecimal exRate = exRateProvider.getExRate(currency);
 

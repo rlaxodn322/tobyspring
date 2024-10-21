@@ -2,10 +2,11 @@ package tobyspring;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import tobyspring.exrate.CachedExRateProvider;
-import tobyspring.exrate.ExRateProvider;
-import tobyspring.exrate.SimpleExRateProvider;
-import tobyspring.exrate.WebApiExRateProvider;
+import org.springframework.web.client.RestTemplate;
+import tobyspring.api.ApiTemplate;
+import tobyspring.api.ErApiExtractor;
+import tobyspring.api.SimpleApiExecutor;
+import tobyspring.exrate.*;
 import tobyspring.payment.PaymentService;
 
 import java.time.Clock;
@@ -15,17 +16,24 @@ import java.time.Clock;
 //@ComponentScan
 public class PaymentConfig {
     @Bean
-    public PaymentService paymentService(){
-        return new PaymentService(exRateProvider() , clock());
+    public PaymentService paymentService() {
+        return new PaymentService(exRateProvider(), clock());
+    }
+
+    @Bean
+    public RestTemplate restTemplate(){
+        return new RestTemplate();
     }
 
     @Bean
     public ExRateProvider exRateProvider() {
-        return new WebApiExRateProvider();
+        return new RestTemplateExRateProvider(restTemplate());
     }
 
     @Bean
-    public Clock clock(){ return Clock.systemDefaultZone();}
+    public Clock clock() {
+        return Clock.systemDefaultZone();
+    }
 }
 
 

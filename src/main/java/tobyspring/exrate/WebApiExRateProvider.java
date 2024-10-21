@@ -2,6 +2,8 @@ package tobyspring.exrate;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import tobyspring.api.ApiExecutor;
+import tobyspring.api.SimpleApiExecutor;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -10,7 +12,6 @@ import java.math.BigDecimal;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.stream.Collectors;
 
 public class WebApiExRateProvider implements ExRateProvider{
@@ -18,6 +19,11 @@ public class WebApiExRateProvider implements ExRateProvider{
 
     public BigDecimal getExRate(String currency)  {
         String url = "https://open.er-api.com/v6/latest/" + currency;
+        return runApiForExRate(url, new SimpleApiExecutor());
+        //System.out.println("API Exrate: " + data.rates().get("KRW"));
+    }
+
+    private static BigDecimal runApiForExRate(String url, ApiExecutor apiExecutor) {
         URI uri;
         try {
             uri = new URI(url);
@@ -26,29 +32,22 @@ public class WebApiExRateProvider implements ExRateProvider{
         }
         String response;
         try{
-            HttpURLConnection connection =(HttpURLConnection) uri.toURL().openConnection();
-           try{
-               BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-               response = br.lines().collect(Collectors.joining());
-           }catch(IOException e){
+            response = apiExecutor.execute(uri);
+        }
+           catch(IOException e){
                throw new RuntimeException(e);
            }
-
-
-        }catch (IOException e){
-            throw new RuntimeException(e);
-        }
-
-
-
         try {
-            ObjectMapper mapper = new ObjectMapper();
-            ExRateData data = mapper.readValue(response, ExRateData.class);
-            return data.rates().get("KRW");
+            return extractExRate(response);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
-        //System.out.println("API Exrate: " + data.rates().get("KRW"));
-
     }
+
+    private static BigDecimal extractExRate(String response) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        ExRateData data = mapper.readValue(response, ExRateData.class);
+        return data.rates().get("KRW");
+    }
+
 }
